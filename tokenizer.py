@@ -28,12 +28,17 @@ class Tokenizer:
         else:
             raise ValueError("pls gib pkl file extension")
         
-    def encode(self,text):
+    def encode(self,text,visualize_tokens=False):
         if self.vocab:
             tokens = encode(text,self.merges)
-            return tokens
         else:
             raise ValueError("pls load or train the model first")
+        
+        if visualize_tokens:
+            words = [decode([token],self.vocab) for token in tokens]
+            return tokens,words
+        else:
+            return tokens
         
     def decode(self,tokens):
         if self.vocab:
@@ -42,6 +47,3 @@ class Tokenizer:
         else:
             raise ValueError("pls load or train the model first")
 
-a=Tokenizer()
-a.train('aaaaaaaaaaa',300)
-print(a.encode('aaaaaa'))
